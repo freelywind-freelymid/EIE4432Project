@@ -19,7 +19,7 @@ div label{
     top: 0px;
     left: 0px;
     height: 100%;
-    width: 0%;
+    width: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: none;
     color: #676767;
