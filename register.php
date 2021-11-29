@@ -72,9 +72,9 @@
                 <div>
                     <table>
                         <tr>
-                            <td><input type="submit" id="send" name="send" value="Send" /></td>
-                            <td><input type="reset" id="reset" name="reset" value="Reset" /></td>
-                            <td><button id="back" name="back">Back</button></td>
+                            <td width=33%><input type="submit" id="send" name="send" value="Register" /></td>
+                            <td width=33%><input type="reset" id="reset" name="reset" value="Reset" /></td>
+                            <td width=33%><button id="back" name="back">Back</button></td>
                         </tr>
                     </table>               
                 </div>
