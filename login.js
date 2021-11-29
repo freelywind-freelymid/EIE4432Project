@@ -20,6 +20,11 @@ $(document).ready(function () {
         return valid;
     });
 
+    $("#loginPage_register").click(function (){
+        $("#login-popup").hide();
+        $("#register-popup").show();
+    });
+
     $("#loginPage_back").click(function () {
         $("#login-popup").hide();
     });

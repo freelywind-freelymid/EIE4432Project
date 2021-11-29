@@ -11,33 +11,14 @@ body{
 table{
     border:0px;
     width:100%;
-    text-align: center;
     margin: 0px;
-    padding:10px;
+    padding: 0px;
 }
 
-ul, .dropbtn, .dropdown, .dropdown-Title, .dropdown-content{
-    text-decoration: none;
-    list-style-type: none;
-    text-align: center;
-    margin: auto;
+th{
+    width: 16%;
 }
 
-.dropdown:hover, .dropdown-Title:hover, .dropbtn:hover{
-    background-color: gray;
-    color: black;
-}
-
-.title-right{
-    float: right;
-    margin:5px;
-}
-
-.search_part{
-    background-color: olive;
-}
-
-.loginbtn{
-    background-color: limegreen;
-    border-radius:20px;
+.company_icon_col, .title-right{
+    width: 5%;
 }
