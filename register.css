@@ -1,0 +1,95 @@
+div{
+    text-align: center;
+}
+
+div label{
+    float: left;
+}
+
+.inputBox, .inputSelect {
+    width: 350px;
+    margin: auto;
+    border: #dedede 1px solid;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+#register-popup {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    color: #676767;
+}
+
+.register-form {
+    width: 350px;
+    margin: auto;
+    background-color: white;
+    font-family: Arial;
+    position: relative;
+    top: 3%;
+    box-shadow: 1px 1px 5px #444444;
+    padding: 20px 40px 40px 40px;
+}
+
+.rowData{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.info {
+    color: #d30a0a;
+    letter-spacing: 2px;
+    padding-left: 5px;
+    float: right;
+}
+
+#send {
+    background-color: #09F;
+    border: 1px solid #1398f1;
+    font-family: Arial;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    margin: auto;
+    width: 100%;
+    border-radius: 30px;
+}
+
+#reset{
+    background-color: #09F;
+    border: 1px solid #1398f1;
+    font-family: Arial;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    margin: auto;
+    width: 100%;
+    border-radius: 30px;
+}
+
+#back{
+    background-color: #09F;
+    border: 1px solid #1398f1;
+    font-family: Arial;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    margin: auto;
+    width: 100%;
+    border-radius: 30px;
+}
+
+#register-icon-popup h1 {
+    font-weight: normal;
+    text-align: center;
+    margin: 10px 0px 20px 0px;
+}
+
+.input-error {
+    border: #e66262 1px solid;
+}

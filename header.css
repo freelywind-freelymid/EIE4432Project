@@ -1,0 +1,43 @@
+body{
+    margin:0px;
+}
+
+.topnav{
+    margin:0px;
+    background-color: whitesmoke;
+    color: black;
+}
+
+table{
+    border:0px;
+    width:100%;
+    text-align: center;
+    margin: 0px;
+    padding:10px;
+}
+
+ul, .dropbtn, .dropdown, .dropdown-Title, .dropdown-content{
+    text-decoration: none;
+    list-style-type: none;
+    text-align: center;
+    margin: auto;
+}
+
+.dropdown:hover, .dropdown-Title:hover, .dropbtn:hover{
+    background-color: gray;
+    color: black;
+}
+
+.title-right{
+    float: right;
+    margin:5px;
+}
+
+.search_part{
+    background-color: olive;
+}
+
+.loginbtn{
+    background-color: limegreen;
+    border-radius:20px;
+}
