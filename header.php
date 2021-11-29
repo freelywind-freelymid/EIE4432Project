@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="header.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="register.js"></script>
+<script src="login.js"></script>
 </head>
 
 <body>
@@ -68,6 +69,10 @@
 
     <div class="registerPage">
         <?php include 'register.php'?>
+    </div>
+
+    <div class="loginPage">
+        <?php include 'login.php'?>
     </div>
 
 </body>

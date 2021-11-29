@@ -13,58 +13,58 @@ $(document).ready(function () {
         $(".inputBox").removeClass("input-error");
         $(".inputSelect").removeClass("input-error");
         
-        var nickName = $("#nickName").val().trim();
-        var userEmail = $("#userEmail").val().trim();
-        var birthday = $("#birthday").val();
-        var gender = $("#gender").val();
-        var userIcon = $("#userIcon").val();
-        var password = $("#password").val().trim();
-        var confirmPassword = $("#confirmPassword").val().trim();
+        var nickName = $("#registerPage_nickName").val().trim();
+        var userEmail = $("#registerPage_userEmail").val().trim();
+        var birthday = $("#registerPage_birthday").val();
+        var gender = $("#registerPage_gender").val();
+        var userIcon = $("#registerPage_userIcon").val();
+        var password = $("#registerPage_password").val().trim();
+        var confirmPassword = $("#registerPage_confirmPassword").val().trim();
 
         if (nickName == "") {
             $("#nickName-info").html("Required.");
-            $("#nickName").addClass("input-error");
+            $("#registerPage_nickName").addClass("input-error");
         }
         if (userEmail == "") {
             $("#userEmail-info").html("Required.");
-            $("#userEmail").addClass("input-error");
+            $("#registerPage_userEmail").addClass("input-error");
             valid = false;
         }
         if (!userEmail.match(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/))
         {
             $("#userEmail-info").html("Invalid.");
-            $("#userEmail").addClass("input-error");
+            $("#registerPage_userEmail").addClass("input-error");
             valid = false;
         }
 
         birthday = Date.parse(birthday);
         if (isNaN(birthday)) {
             $("#birthday-info").html("Invalid.");
-            $("#birthday").addClass("input-error");
+            $("#registerPage_birthday").addClass("input-error");
             valid = false;
         }
 
         if (gender == "") {
             $("#gender-info").html("Required.");
-            $("#gender").addClass("input-error");
+            $("#registerPage_gender").addClass("input-error");
             valid = false;
         }
 
         if (password == "") {
             $("#password-info").html("Required.");
-            $("#password").addClass("input-error");
+            $("#registerPage_password").addClass("input-error");
             valid = false;
         }
 
         if (confirmPassword == "") {
             $("#confirmPassword-info").html("Required.");
-            $("#confirmPassword").addClass("input-error");
+            $("#registerPage_confirmPassword").addClass("input-error");
             valid = false;
         }
         
         if(password != confirmPassword){
             $("#confirmPassword-info").html("Not matching.");
-            $("#confirmPassword").addClass("input-error");
+            $("#registerPage_confirmPassword").addClass("input-error");
             valid = false;
         }
 
@@ -77,7 +77,7 @@ $(document).ready(function () {
         $(".inputSelect").removeClass("input-error");
     });
 
-    $("#back").click(function () {
+    $("#registerPage_back").click(function () {
         $("#register-popup").hide();
     });
 });
