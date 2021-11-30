@@ -12,72 +12,83 @@
                 $userEmail = $_POST["#registerPage_userEmail"].trim();
                 $birthday = $_POST["#registerPage_birthday"];
                 $gender = $_POST["#registerPage_gender"];
-                $userIcon = $_POST["#registerPage_userIcon"];
+                $userIcon = $_FILES['registerPage_userIcon']['name'];
                 $password = $_POST["#registerPage_password"].trim();
 
                 //encrypt the password and save the encryption
                 $password = password_hash($password,PASSWORD_DEFAULT);
-                
-                //db setting
-                $server = "localhost";
-                $user = "eie4432project";
-                $pw = "20017556D";
-                $db = "eie4432project";
-                
+                             
                 $flag = true;
-            
-                //open a connection with MySQL
-                $connect = mysqli_connect($server,$user,$pw,$db);
-                //test the connection
-                if(!$connect){
-                    die("Connection failed:" .mysqli_connect_error());
-                    $flag = false;
+
+                if(!empty($userIcon)){
+                    //save the icon
+                    $usericon_loc = $_FILES['registerPage_userIcon'][$userEmail];
+                    $icon_path = "res/image/user/icon/";
+                    if(move_uploaded_file($usericon_loc, $icon_path.$userIcon)){
+                        $icon_final_path = $icon_path.$userIcon;
+                    }
+                    else{
+                        $icon_final_path = null;
+                        $flag = false;
+                    }
+                }else{
+                    $icon_final_path = null;
                 }
-                else{
+                
+            
+                if($flag){
+                    //db setting
+                    $server = "localhost";
+                    $user = "eie4432project";
+                    $pw = "20017556D";
+                    $db = "eie4432project";
 
-                    $stmt = $connect->prepare("SELECT * FROM user WHERE email = ?");
-                    $stmt->bind_param("s",$userEmail);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
+                    //open a connection with MySQL
+                    $connect = mysqli_connect($server,$user,$pw,$db);
 
-                    if(!$result){
-                        die("Could not successfully run query." .mysqli_error($connect));
+                    //test the connection
+                    if(!$connect){
+                        die("Connection failed:" .mysqli_connect_error());
                         $flag = false;
                     }
                     else{
-                        if(mysqli_num_rows($result) == 0){
-                            //$stmt = $connect->prepare("INSERT INTO user (nickName, email, ) VALUES (?,?,?,?,?,?)");
-                            //$stmt->bind_param("ssssss", $nickName, $userEmail, $birthday, $gender, $password);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
+                        $stmt = $connect->prepare("SELECT * FROM customer WHERE email = ?");
+                        $stmt->bind_param("s",$userEmail);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
-                            if(!$result){
-                                die("Could not successfully run query." .mysqli_error($connect));
-                                $flag = false;
-                            }
+                        if(!$result){
+                            die("Could not successfully run query." .mysqli_error($connect));
+                            $flag = false;
                         }
-                    }                   
-                }
+                        else{
+                            if(mysqli_num_rows($result) == 0){
+                                $stmt = $connect->prepare("INSERT INTO customer (nickName, email, icon_path, gender, birthday) VALUES (?,?,?,?,?)");
+                                $stmt->bind_param("sssss", $nickName, $userEmail, $icon_final_path, $gender, $birthday);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
 
-                //close the connection
-                mysqli_close($connect);
+                                if(!$result){
+                                    die("Could not successfully run query." .mysqli_error($connect));
+                                    $flag = false;
+                                }
+                            }
+                        }                   
+                    }
 
-                if($flag){
-                    showOK();
-                }
-                else{
-                    showFail();
-                }
+                    //close the connection
+                    mysqli_close($connect);
+                }              
             }
 
-            if(isset($_POST["registerPage_register"]))
+            if(isset($_POST["#registerPage_register"]))
             {
                 signup();
             } 
         ?>
 
         <div id="register-popup">
-            <form class="register-form" action="register.php" id="register-form" method="post">
+            <form class="register-form" action="index.php" id="register-form" method="post">
                 <h1>Register</h1>
                 <div class="rowData">
                     <div>

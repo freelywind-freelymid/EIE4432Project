@@ -6,22 +6,12 @@
 
     <body>
         <?php
-            function showOK(){
-                setcookie("loginId", $loginId, time() + 86400, "/"); // 86400 = 1 day
-                setcookie("loginState", true, time() + 86400, "/"); // 86400 = 1 day
-            }
-
-            function showFail(){
-                setcookie("loginId", $loginId, time() + 86400, "/"); // 86400 = 1 day
-                setcookie("loginState", false, time() + 86400, "/"); // 86400 = 1 day
-            }
-
             function login()
             {
                 $loginId = $_POST["#loginPage_loginId"].trim();
                 $password = $_POST["#loginPage_password"].trim();
 
-                //encrypt the password and save the encryption
+                //encrypt the password
                 $password = password_hash($password,PASSWORD_DEFAULT);
                 
                 //db setting
@@ -29,9 +19,9 @@
                 $user = "eie4432project";
                 $pw = "20017556D";
                 $db = "eie4432project";
-                
-                $flag = false;
             
+                $flag = false;
+
                 //open a connection with MySQL
                 $connect = mysqli_connect($server,$user,$pw,$db);
                 //test the connection
@@ -39,7 +29,8 @@
                     die("Connection failed:" .mysqli_connect_error());
                 }
                 else{
-                    $stmt = $connect->prepare("SELECT userPassword FROM user WHERE email = ?");
+                    //is admin?
+                    $stmt = $connect->prepare("SELECT pw FROM admin, admin_pw WHERE admin.name = ? and admin.adminID = admin_pw.adminID");
                     $stmt->bind_param("s",$loginId);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -50,26 +41,50 @@
                     else{
                         if(mysqli_num_rows($result) == 1){
                             while($row = mysqli_fetch_assoc($result)){
-                                if($password == $row['userPassword']){
+                                if($password == $row['pw']){
+                                    setcookie("loginId", $loginId, time() + 86400, "/"); // 86400 = 1 day
+                                    setcookie("loginState", "A", time() + 86400, "/"); // 86400 = 1 day
+
                                     $flag = true;
                                 }
                             }           
                         }
-                    }                   
+                        else{
+                            //is customer?
+                            $stmt = $connect->prepare("SELECT pw FROM cust_pw WHERE custID = ?");
+                            $stmt->bind_param("s",$loginId);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            if(!$result){
+                                die("Could not successfully run query." .mysqli_error($connect));
+                            }
+                            else{
+                                if(mysqli_num_rows($result) == 1){
+                                    while($row = mysqli_fetch_assoc($result)){
+                                        if($password == $row['pw']){
+                                            setcookie("loginId", $loginId, time() + 86400, "/"); // 86400 = 1 day
+                                            setcookie("loginState", "C", time() + 86400, "/"); // 86400 = 1 day
+
+                                            $flag = true;
+                                        }
+                                    }           
+                                }
+                            }
+                        }
+                    }                       
                 }
 
                 //close the connection
                 mysqli_close($connect);
 
-                if($flag){
-                    showOK();
-                }
-                else{
-                    showFail();
+                if(!$flag){
+                    setcookie("loginId", $loginId, time() + 86400, "/"); // 86400 = 1 day
+                    setcookie("loginState", "U", time() + 86400, "/"); // 86400 = 1 day
                 }
             }
 
-            if(isset($_POST["loginPage_login"]))
+            if(isset($_POST["#loginPage_login"]))
             {
                 login();
             }
