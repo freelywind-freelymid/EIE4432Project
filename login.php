@@ -8,8 +8,8 @@
         <?php
             function login()
             {
-                $loginId = $_POST["#loginPage_loginId"].trim();
-                $password = $_POST["#loginPage_password"].trim();
+                $loginId = trim($_POST["#loginPage_loginId"]);
+                $password = trim($_POST["#loginPage_password"]);
 
                 //encrypt the password
                 $password = password_hash($password,PASSWORD_DEFAULT);
@@ -86,7 +86,8 @@
 
             if(isset($_POST["#loginPage_login"]))
             {
-                login();
+                echo '<script>alert("Welcome to Geeks for Geeks")</script>';
+                login();            
             }
         ?>
 

@@ -8,12 +8,12 @@
         <?php
             function signup()
             {
-                $nickName = $_POST["registerPage_nickName"].trim();
-                $userEmail = $_POST["#registerPage_userEmail"].trim();
+                $nickName = trim($_POST["registerPage_nickName"]);
+                $userEmail = trim($_POST["#registerPage_userEmail"]);
                 $birthday = $_POST["#registerPage_birthday"];
                 $gender = $_POST["#registerPage_gender"];
                 $userIcon = $_FILES['registerPage_userIcon']['name'];
-                $password = $_POST["#registerPage_password"].trim();
+                $password = trim($_POST["#registerPage_password"]);
 
                 //encrypt the password and save the encryption
                 $password = password_hash($password,PASSWORD_DEFAULT);
@@ -88,7 +88,7 @@
         ?>
 
         <div id="register-popup">
-            <form class="register-form" action="index.php" id="register-form" method="post">
+            <form class="register-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" id="register-form" method="post">
                 <h1>Register</h1>
                 <div class="rowData">
                     <div>
