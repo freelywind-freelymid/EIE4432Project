@@ -23,6 +23,7 @@ div label{
     background: rgba(0, 0, 0, 0.5);
     display: none;
     color: #676767;
+    z-index: 9;
 }
 
 .login-form {

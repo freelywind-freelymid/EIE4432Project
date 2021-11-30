@@ -1,13 +1,32 @@
 .header{
-    position: fixed;
     top:0px;
-    width: 100%;
+    width: 100%;   
 }
 
 .promote{
     text-align: center;
+    width: 100%;
+    position: relative;
 }
 
 .promote img{
-    max-width: 40%;
+    max-width:100%;
+    max-height:100%;
+}
+
+.promote-word{
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    font-size: 16px;
+    color:black;
+    font-family: Viner Hand ITC;
+}
+
+a{
+    text-decoration:none
+}
+
+#next{
+    color: red;
 }

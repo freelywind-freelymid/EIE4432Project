@@ -6,8 +6,7 @@
 <link rel="stylesheet" href="index.css">
 </head>
 
-<body>
-    
+<body>  
     <table>
         <tr>
             <td colspan="2">
@@ -20,10 +19,14 @@
             <td colspan="2">
                 <div class="promote">
                     <img src="res/image/ui/promote.jpg">
+                    <div class="promote-word">
+                        <h1>What's <a id="next" href="#browsing">NEXT</a>?</h1>
+                    </div>
                 </div>
             </td>
         </tr>
         <tr>
+            <a name="browsing"></a>
             <td rowspan="2">
                 <div class="search_index">
                 </div>
@@ -40,7 +43,7 @@
                 <div class="footer">
                     <?php include 'footer.php'?>
                 </div>
-            </td>          
+            </td>
         </tr>
     </table>
 <body>
