@@ -2,17 +2,11 @@
 <html>
     <head>
         <link rel="stylesheet" href="login.css">
-    </head>
 
-    <body>
         <?php
-            function login()
-            {
-                $loginId = trim($_POST["#loginPage_loginId"]);
-                $password = trim($_POST["#loginPage_password"]);
-
-                //encrypt the password
-                $password = password_hash($password,PASSWORD_DEFAULT);
+            function login(){
+                $loginId = trim($_POST["loginPage_loginId"]);
+                $password = trim($_POST["loginPage_password"]);
                 
                 //db setting
                 $server = "localhost";
@@ -30,7 +24,7 @@
                 }
                 else{
                     //is admin?
-                    $stmt = $connect->prepare("SELECT pw FROM admin, admin_pw WHERE admin.name = ? and admin.adminID = admin_pw.adminID");
+                    $stmt = $connect->prepare("SELECT password FROM admin WHERE name = ?");
                     $stmt->bind_param("s",$loginId);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -41,7 +35,7 @@
                     else{
                         if(mysqli_num_rows($result) == 1){
                             while($row = mysqli_fetch_assoc($result)){
-                                if($password == $row['pw']){
+                                if(password_verify($password,$row['password'])){
                                     setcookie("loginId", $loginId, time() + 86400, "/"); // 86400 = 1 day
                                     setcookie("loginState", "A", time() + 86400, "/"); // 86400 = 1 day
 
@@ -51,7 +45,7 @@
                         }
                         else{
                             //is customer?
-                            $stmt = $connect->prepare("SELECT pw FROM cust_pw WHERE custID = ?");
+                            $stmt = $connect->prepare("SELECT password FROM customer WHERE email = ?");
                             $stmt->bind_param("s",$loginId);
                             $stmt->execute();
                             $result = $stmt->get_result();
@@ -62,7 +56,7 @@
                             else{
                                 if(mysqli_num_rows($result) == 1){
                                     while($row = mysqli_fetch_assoc($result)){
-                                        if($password == $row['pw']){
+                                        if(password_verify($password,$row['password'])){
                                             setcookie("loginId", $loginId, time() + 86400, "/"); // 86400 = 1 day
                                             setcookie("loginState", "C", time() + 86400, "/"); // 86400 = 1 day
 
@@ -81,16 +75,22 @@
                 if(!$flag){
                     setcookie("loginId", $loginId, time() + 86400, "/"); // 86400 = 1 day
                     setcookie("loginState", "U", time() + 86400, "/"); // 86400 = 1 day
+
+                    echo '<script>alert("Login fail!")</script>';
+                }
+                else{
+                    echo '<script>alert("Login succes!")</script>';
                 }
             }
-
-            if(isset($_POST["#loginPage_login"]))
+            
+            if(isset($_POST["loginPage_login"]))
             {
-                echo '<script>alert("Welcome to Geeks for Geeks")</script>';
-                login();            
+                login();
             }
         ?>
+    </head>
 
+    <body>
         <div id="login-popup">
             <form class="login-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" id="login-form" method="post">
                 <h1>Login</h1>

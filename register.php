@@ -6,35 +6,31 @@
 
     <body>
         <?php
+            function showErrMsg(){
+
+            }
+
+            function showResult(){
+                if($flag){
+                    echo '<script>alert("Register succes!")</script>';                  
+                }
+                else{
+                    echo '<script>alert("Register fail!")</script>';
+                }
+            }
+
             function signup()
             {
                 $nickName = trim($_POST["registerPage_nickName"]);
-                $userEmail = trim($_POST["#registerPage_userEmail"]);
-                $birthday = $_POST["#registerPage_birthday"];
-                $gender = $_POST["#registerPage_gender"];
-                $userIcon = $_FILES['registerPage_userIcon']['name'];
-                $password = trim($_POST["#registerPage_password"]);
+                $userEmail = trim($_POST["registerPage_userEmail"]);
+                $birthday = $_POST["registerPage_birthday"];
+                $gender = $_POST["registerPage_gender"];
+                $password = trim($_POST["registerPage_password"]);
 
                 //encrypt the password and save the encryption
                 $password = password_hash($password,PASSWORD_DEFAULT);
                              
-                $flag = true;
-
-                if(!empty($userIcon)){
-                    //save the icon
-                    $usericon_loc = $_FILES['registerPage_userIcon'][$userEmail];
-                    $icon_path = "res/image/user/icon/";
-                    if(move_uploaded_file($usericon_loc, $icon_path.$userIcon)){
-                        $icon_final_path = $icon_path.$userIcon;
-                    }
-                    else{
-                        $icon_final_path = null;
-                        $flag = false;
-                    }
-                }else{
-                    $icon_final_path = null;
-                }
-                
+                $flag = true;         
             
                 if($flag){
                     //db setting
@@ -63,25 +59,42 @@
                         }
                         else{
                             if(mysqli_num_rows($result) == 0){
-                                $stmt = $connect->prepare("INSERT INTO customer (nickName, email, icon_path, gender, birthday) VALUES (?,?,?,?,?)");
-                                $stmt->bind_param("sssss", $nickName, $userEmail, $icon_final_path, $gender, $birthday);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
 
-                                if(!$result){
-                                    die("Could not successfully run query." .mysqli_error($connect));
-                                    $flag = false;
-                                }
+                                $icon_path_header = 'res/image/user/icon/';
+                                $icon_final_path = null;
+
+                                //if(count($_FILES) > 0){
+                                    $file = $_FILES['registerPage_userIcon']['tmp_name'];
+
+                                    //rename the file
+                                    $newfilename = $userEmail . '.' . $_FILES['registerPage_userIcon']['type'];
+                                    
+                                    $dest = $icon_path_header . $newfilename;
+                                    $icon_final_path = $dest;
+                                    
+                                    move_uploaded_file($file, $dest);
+                                //}                               
+
+                                $stmt = $connect->prepare("INSERT INTO customer (nickName, email, icon_path, gender, birthday, password) VALUES (?,?,?,?,?,?)");
+                                $stmt->bind_param("ssssss", $nickName, $userEmail, $icon_final_path, $gender, $birthday, $password);
+                                $stmt->execute();
+                            }
+                            else{
+                                $flag = false;
+                                showErrMsg();
                             }
                         }                   
                     }
 
                     //close the connection
                     mysqli_close($connect);
-                }              
+                }
+                echo '<script>alert('.$_FILES['registerPage_userIcon']['name'].')</script>';
+                //echo '<script>alert('.$icon_final_path.')</script>';
+                //showResult();
             }
 
-            if(isset($_POST["#registerPage_register"]))
+            if(isset($_POST["registerPage_register"]))
             {
                 signup();
             } 
@@ -119,7 +132,7 @@
                         <label>Gender: </label><span id="gender-info" name="gender-info" class="info"></span>
                     </div>
                     <div>
-                        <select id="registerPage_gender" name="gender" class="inputSelect">
+                        <select id="registerPage_gender" name="registerPage_gender" name="gender" class="inputSelect">
                             <option class="inputOption" value=""></option>
                             <option class="inputOption" value="M">Male</option>
                             <option class="inputOption" value="F">Female</option>
@@ -132,7 +145,7 @@
                         <label>Profile image: </label><span id="userIcon-info" class="info"></span>
                     </div>
                     <div>
-                        <input type="file" id="registerPage_userIcon" name="registerPage_userIcon" accept="image/*" class="inputBox">
+                        <input type="file" id="registerPage_userIcon" name="registerPage_userIcon" enctype="multipart/form-data" accept="image/*" class="inputBox">
                     </div>
                 </div>
                 <div class="rowData">
