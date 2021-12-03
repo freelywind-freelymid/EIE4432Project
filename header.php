@@ -51,8 +51,15 @@
                     </div>
                 </th>
                 <th class="title-right"><div><img id="cart" src="res/image/ui/cart.png" height="15"></div></th>
-                <th class="title-right"><div id="register">Register</div></th>
-                <th class="title-right"><div id="login">Login</div></th>                 
+                <?php
+                    if($_SESSION['loginState'] == 'A' || $_SESSION['loginState'] == 'C'){
+                        echo '<th class="title-right"><div id="sign-out">Sign Out</div>';
+                    }
+                    else{
+                        echo '<th class="title-right"><div id="register">Register</div></th>';
+                        echo '<th class="title-right"><div id="login">Login</div></th>';
+                    }
+                ?>               
             </tr>
         </table>
     </div>
@@ -62,7 +69,7 @@
     </div>
 
     <div class="loginPage">
-        <?php include 'login.php'?>
+        <?php include 'login.html'?>
     </div>
 
 </body>

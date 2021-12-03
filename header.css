@@ -22,3 +22,7 @@ th{
 .company_icon_col, .title-right{
     width: 5%;
 }
+
+#sign-out{
+    display: none;
+}

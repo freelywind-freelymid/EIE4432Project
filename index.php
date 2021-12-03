@@ -1,3 +1,25 @@
+<?php
+    session_start();
+
+    if($_SESSION['loginFlag'] == 'T'){
+        switch ($_SESSION['loginState']){
+            case 'A':
+            case 'C':
+                echo '<script>alert("Login succes!")</script>';
+                break;
+
+            case 'U':
+                echo '<script>alert("Login fail!")</script>';
+                break;
+            
+            default:
+                break;
+        }
+
+        $_SESSION['loginFlag'] = 'F';
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 

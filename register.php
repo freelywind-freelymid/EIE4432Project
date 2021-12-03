@@ -6,10 +6,6 @@
 
     <body>
         <?php
-            function showErrMsg(){
-
-            }
-
             function signup()
             {
                 $nickName = trim($_POST["registerPage_nickName"]);
@@ -78,7 +74,6 @@
                             }
                             else{
                                 $flag = false;
-                                showErrMsg();
                             }
                         }                   
                     }
