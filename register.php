@@ -10,15 +10,6 @@
 
             }
 
-            function showResult(){
-                if($flag){
-                    echo '<script>alert("Register succes!")</script>';                  
-                }
-                else{
-                    echo '<script>alert("Register fail!")</script>';
-                }
-            }
-
             function signup()
             {
                 $nickName = trim($_POST["registerPage_nickName"]);
@@ -62,22 +53,28 @@
 
                                 $icon_path_header = 'res/image/user/icon/';
                                 $icon_final_path = null;
-
-                                //if(count($_FILES) > 0){
+                                
+                                // limit the file size
+                                if ($_FILES['registerPage_userIcon']['size'] <= 500000) {
                                     $file = $_FILES['registerPage_userIcon']['tmp_name'];
 
                                     //rename the file
-                                    $newfilename = $userEmail . '.' . $_FILES['registerPage_userIcon']['type'];
+                                    $newfilename = $userEmail . '.' . strtolower(end(explode('.',$_FILES['registerPage_userIcon']['name'])));
                                     
                                     $dest = $icon_path_header . $newfilename;
                                     $icon_final_path = $dest;
-                                    
-                                    move_uploaded_file($file, $dest);
-                                //}                               
 
-                                $stmt = $connect->prepare("INSERT INTO customer (nickName, email, icon_path, gender, birthday, password) VALUES (?,?,?,?,?,?)");
-                                $stmt->bind_param("ssssss", $nickName, $userEmail, $icon_final_path, $gender, $birthday, $password);
-                                $stmt->execute();
+                                    //is file exists?
+                                    if(file_exists($dest) > 0){
+                                        //delete the file            
+                                        unlink($dest);
+                                    }
+                                    move_uploaded_file($file, $dest);              
+
+                                    $stmt = $connect->prepare("INSERT INTO customer (nickName, email, icon_path, gender, birthday, password) VALUES (?,?,?,?,?,?)");
+                                    $stmt->bind_param("ssssss", $nickName, $userEmail, $icon_final_path, $gender, $birthday, $password);
+                                    $stmt->execute();
+                                }
                             }
                             else{
                                 $flag = false;
@@ -89,9 +86,13 @@
                     //close the connection
                     mysqli_close($connect);
                 }
-                echo '<script>alert('.$_FILES['registerPage_userIcon']['name'].')</script>';
-                //echo '<script>alert('.$icon_final_path.')</script>';
-                //showResult();
+                
+                if($flag){
+                    echo '<script>alert("Register succes!")</script>';                  
+                }
+                else{
+                    echo '<script>alert("Register fail!")</script>';
+                }
             }
 
             if(isset($_POST["registerPage_register"]))
@@ -101,7 +102,7 @@
         ?>
 
         <div id="register-popup">
-            <form class="register-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" id="register-form" method="post">
+            <form class="register-form" action="" id="register-form" method="post" enctype="multipart/form-data">
                 <h1>Register</h1>
                 <div class="rowData">
                     <div>
@@ -145,7 +146,7 @@
                         <label>Profile image: </label><span id="userIcon-info" class="info"></span>
                     </div>
                     <div>
-                        <input type="file" id="registerPage_userIcon" name="registerPage_userIcon" enctype="multipart/form-data" accept="image/*" class="inputBox">
+                        <input type="file" id="registerPage_userIcon" name="registerPage_userIcon" accept="image/*" class="inputBox">
                     </div>
                 </div>
                 <div class="rowData">
