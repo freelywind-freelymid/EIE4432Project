@@ -1,12 +1,6 @@
 <?php
     session_start();
-?>
-
-<!DOCTYPE html>
-<html>
-
-<body>
-<?php
+    
     $_SESSION['loginFlag'] = 'T';
 
     $loginId = trim($_POST["loginPage_loginId"]);
@@ -83,6 +77,3 @@
 
     header('Location: index.php');
 ?>
-</body>
-
-</html>
