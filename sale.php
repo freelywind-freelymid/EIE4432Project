@@ -69,5 +69,7 @@
     //close the connection
     mysqli_close($connect);
 
+    unset($_SESSION['cart']);
+
     header('Location: index.php');
 ?>

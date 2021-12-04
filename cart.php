@@ -80,7 +80,7 @@
             </div>
 
             <div class="cart_page_bottom">
-                <input id="cart_reset" type="reset" value="Clear the cart"/>
+                <button id="cart_reset">Clear the cart</button>
                 <input id="cart_bill" type="submit" value="Bill"/>
             </div>
 
