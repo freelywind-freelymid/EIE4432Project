@@ -55,7 +55,7 @@
                     if(mysqli_num_rows($result) == 1){
                         while($row = mysqli_fetch_assoc($result)){
                             if(password_verify($password,$row['password'])){
-                                $_SESSION['loginId'] = $row['custIDID'];
+                                $_SESSION['loginId'] = $row['custID'];
                                 $_SESSION['loginState'] = "C";
 
                                 $flag = true;
