@@ -22,7 +22,7 @@
     }
     else{
         //is admin?
-        $stmt = $connect->prepare("SELECT password FROM admin WHERE name = ?");
+        $stmt = $connect->prepare("SELECT adminID, password FROM admin WHERE name = ?");
         $stmt->bind_param("s",$loginId);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -34,7 +34,7 @@
             if(mysqli_num_rows($result) == 1){
                 while($row = mysqli_fetch_assoc($result)){
                     if(password_verify($password,$row['password'])){
-                        $_SESSION['loginId'] = $loginId;
+                        $_SESSION['loginId'] = $row['adminID'];
                         $_SESSION['loginState'] = "A";
 
                         $flag = true;
@@ -43,7 +43,7 @@
             }
             else{
                 //is customer?
-                $stmt = $connect->prepare("SELECT password FROM customer WHERE email = ?");
+                $stmt = $connect->prepare("SELECT custID, password FROM customer WHERE email = ?");
                 $stmt->bind_param("s",$loginId);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -55,7 +55,7 @@
                     if(mysqli_num_rows($result) == 1){
                         while($row = mysqli_fetch_assoc($result)){
                             if(password_verify($password,$row['password'])){
-                                $_SESSION['loginId'] = $loginId;
+                                $_SESSION['loginId'] = $row['custIDID'];
                                 $_SESSION['loginState'] = "C";
 
                                 $flag = true;

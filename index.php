@@ -5,6 +5,9 @@
         if($_SESSION['loginFlag'] == 'T'){
             switch ($_SESSION['loginState']){
                 case 'A':
+                    header('Location: admin.php');
+                    break;
+
                 case 'C':
                     echo '<script>alert("Login succes!")</script>';
                     break;
@@ -53,6 +56,7 @@
                 array_push($item, $row['price']);
                 array_push($item, $row['img_path']);
                 array_push($item, $row['typeID']);
+                array_push($item, $row['qty']);
 
                 array_push($items, $item);
             }
@@ -80,7 +84,13 @@
             if($cart[$cart_item_key][0] == $itemID){
                 $inCart_flag = true;
                 
-                $cart[$cart_item_key][4] += 1;
+                if($cart[$cart_item_key][4] >= $cart[$cart_item_key][5]+1){
+                    $cart[$cart_item_key][5] += 1;
+                    echo '<script>alert("Added to the cart.")</script>';
+                }
+                else{
+                    echo '<script>alert("No more stock!")</script>';
+                }
                 break;
             }
         }
@@ -89,7 +99,7 @@
         if(!$inCart_flag){
             foreach($items as $item_key => $item){
                 if($items[$item_key][0] == $itemID){
-                    $new_cart_item = array($items[$item_key][0], $items[$item_key][1], $items[$item_key][2], $items[$item_key][3], 1);
+                    $new_cart_item = array($items[$item_key][0], $items[$item_key][1], $items[$item_key][2], $items[$item_key][3], $items[$item_key][5], 1);
 
                     break;
                 }
@@ -130,6 +140,15 @@
     <a name="browsing"></a>
     <div class="item_page" id="item_page">
         <?php
+            $requiredLogin_flag = false;
+            if(isset($_SESSION['loginState'])){
+                $loginState = $_SESSION['loginState'];
+
+                if($loginState == 'C'){
+                    $requiredLogin_flag = true;
+                }
+            }
+
             $items = $_SESSION['items'];
 
             foreach($items as $item){
@@ -138,8 +157,16 @@
                 print "<div class=\"item_upper\">";
                 print "<img class=\"item_img\" src=\"".$item[3]."\">";
                 print "<div class=\"item_butts\">";
-                print "<button class=\"butt_buy\">Buy now</button>";
-                print "<button class=\"butt_addToCart\" onClick='location.href=\"?addToCart=".$item[0]."\"'>Add to cart</button>";
+                
+                if($requiredLogin_flag){
+                    print "<button class=\"butt_buy\" onClick='location.href=\"?buy=".$item[0]."\"'>Buy now</button>";
+                    print "<button class=\"butt_addToCart\" onClick='location.href=\"?addToCart=".$item[0]."\"'>Add to cart</button>";
+                }
+                else{
+                    print "<button class=\"butt_buy required_login\">Buy now</button>";
+                    print "<button class=\"butt_addToCart required_login\">Add to cart</button>";
+                }
+                
                 print "</div>";
                 print "</div>";
 

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(".butt_buy").click(function () {
-        
+    $(".required_login").click(function () {
+        alert("Please login first!");
     });
 });

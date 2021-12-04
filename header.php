@@ -48,11 +48,18 @@
                         <div class="dropdown-content">
                         </div>
                     </div>
-                </th>
-                <th class="title-right"><div><img id="cart" src="res/image/ui/cart.png" height="15"></div></th>
+                </th>                           
                 <?php
                     if(isset($_SESSION['loginState'])){
-                        if($_SESSION['loginState'] == 'A' || $_SESSION['loginState'] == 'C'){
+                        if($_SESSION['loginState'] == 'U'){
+                            echo '<th class="title-right"><div id="register">Register</div></th>';
+                            echo '<th class="title-right"><div id="login">Login</div></th>';               
+                        }
+                        else if($_SESSION['loginState'] == 'C'){
+                            echo '<th class="title-right"><div><img id="cart" src="res/image/ui/cart.png" height="15"></div></th>';
+                            echo '<th class="title-right"><div id="sign-out">Sign Out</div>';
+                        }
+                        else if($_SESSION['loginState'] == 'A'){
                             echo '<th class="title-right"><div id="sign-out">Sign Out</div>';
                         }
                         else{
