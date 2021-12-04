@@ -6,6 +6,7 @@
 <script src="register.js"></script>
 <script src="login.js"></script>
 <script src="sign-out.js"></script>
+<script src="header.js"></script>
 </head>
 
 <body>

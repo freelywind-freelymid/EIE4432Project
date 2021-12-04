@@ -20,7 +20,6 @@
             $_SESSION['loginFlag'] = 'F';
         }
     }
-    
 ?>
 
 <?php
@@ -66,6 +65,43 @@
     mysqli_close($connect);
 ?>
 
+<?php
+    if(isset($_GET['addToCart'])){
+        if(!isset($_SESSION['cart'])){
+            $cart = array();          
+        }
+        else{
+            $cart = $_SESSION['cart'];
+        }
+
+        $itemID = $_GET['addToCart'];
+        $inCart_flag = false;
+        foreach($cart as $cart_item_key=>$cart_item){
+            if($cart[$cart_item_key][0] == $itemID){
+                $inCart_flag = true;
+                
+                $cart[$cart_item_key][4] += 1;
+                break;
+            }
+        }
+
+        $items = $_SESSION['items'];
+        if(!$inCart_flag){
+            foreach($items as $item_key => $item){
+                if($items[$item_key][0] == $itemID){
+                    $new_cart_item = array($items[$item_key][0], $items[$item_key][1], $items[$item_key][2], $items[$item_key][3], 1);
+
+                    break;
+                }
+            }        
+
+            array_push($cart,$new_cart_item);
+        }
+
+        $_SESSION['cart'] = $cart;
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -102,8 +138,8 @@
                 print "<div class=\"item_upper\">";
                 print "<img class=\"item_img\" src=\"".$item[3]."\">";
                 print "<div class=\"item_butts\">";
-                print "<button class=\"butt_buy\" value=\"".$item[0]."\">Buy now</button>";
-                print "<button class=\"butt_addToCart\" value=\"".$item[0]."\">Add to cart</button>";
+                print "<button class=\"butt_buy\">Buy now</button>";
+                print "<button class=\"butt_addToCart\" onClick='location.href=\"?addToCart=".$item[0]."\"'>Add to cart</button>";
                 print "</div>";
                 print "</div>";
 
