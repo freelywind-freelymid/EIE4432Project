@@ -110,6 +110,34 @@
 
         $_SESSION['cart'] = $cart;
     }
+
+    if(isset($_GET['buy'])){
+        $cart = array();
+
+        $itemID = $_GET['buy'];
+
+        $flag = false;
+        $items = $_SESSION['items'];
+        foreach($items as $item_key => $item){
+            if($items[$item_key][0] == $itemID){
+                if($items[$item_key][5] >= 1){
+                    $new_cart_item = array($items[$item_key][0], $items[$item_key][1], $items[$item_key][2], $items[$item_key][3], $items[$item_key][5], 1);                   
+                    $flag = true;
+                }
+                
+                break;
+            }
+        }        
+
+        if($flag){
+            array_push($cart,$new_cart_item);
+            $_SESSION['cart'] = $cart;
+            header('Location: cart.php');
+        }
+        else{
+            echo '<script>alert("No more stock!")</script>';
+        }    
+    }
 ?>
 
 <!DOCTYPE html>
