@@ -3,7 +3,11 @@ $(document).ready(function () {
         location.replace("cart.php");
     });
 
-    $("#company_icon").click(function () {
+    $(".return-home").click(function () {
         location.replace("index.php");
+    });
+
+    $(".return-admin-home").click(function () {
+        location.replace("admin.php");
     });
 });

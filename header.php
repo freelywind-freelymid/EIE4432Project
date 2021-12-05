@@ -13,7 +13,20 @@
     <div class="topnav">
         <table>
             <tr>
-                <th class="company_icon_col"><img id="company_icon" name="company_icon" src="res/image/ui/company_icon.png" height="30"></th>
+                <?php
+                    if(isset($_SESSION['loginState'])){
+                        if($_SESSION['loginState'] != 'A'){
+                            echo '<th class="company_icon_col return-home"><img id="company_icon" name="company_icon" src="res/image/ui/company_icon.png" height="30"></th>';             
+                        }
+                        else{
+                            echo '<th class="company_icon_col return-admin-home"><img id="company_icon" name="company_icon" src="res/image/ui/company_icon.png" height="30"></th>';
+                        }
+                    }
+                    else{
+                        echo '<th class="company_icon_col return-home"><img id="company_icon" name="company_icon" src="res/image/ui/company_icon.png" height="30"></th>';
+                    }
+                ?>
+                
                 <th>
                     <div class="dropdown">
                         <div class="dropdown-Title">Women</div>

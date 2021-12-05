@@ -106,6 +106,7 @@
             }        
 
             array_push($cart,$new_cart_item);
+            echo '<script>alert("Added to the cart.")</script>';
         }
 
         $_SESSION['cart'] = $cart;
