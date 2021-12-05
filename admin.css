@@ -1,0 +1,97 @@
+.header{
+    top:0px;
+    width: 100%;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.admin_butt button{
+    margin: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.admin_sale_recond{
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+    text-align: left;
+    width: 100%;
+    color: white;
+}
+
+.admin_sale_recond table{
+    padding: 5px;
+    margin: 10px;
+    width: 100%;
+    color: white;
+    border: white;
+}
+
+.admin_items_page{
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+    text-align: left;
+    width: 100%;
+    color: white;
+}
+
+.admin_item{
+    border-bottom: #f1f1f1;
+    border-width: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    max-height: 100px;
+}
+
+.admin_item_img img{
+    border: silver;
+    border-width: 5px;
+    height: 100px;
+}
+
+.admin_item_desc, .admin_item_number_parent, .admin_item_price_parent{
+    text-align: left;
+}
+
+.admin_item_butt{
+    display: inline
+}
+
+.admin_item_butt_save{
+    background-color: red;
+    color: white;
+}
+
+.admin_item_butt_save, .admin_item_butt_del{
+    margin: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.admin_item_butt_save:hover, .admin_item_butt_del:hover{
+    background-color: gray;
+    color: black;
+}
