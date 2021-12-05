@@ -144,55 +144,19 @@
         <?php
             $admin_record_whole = $_SESSION['admin_record_whole'];
 
-            echo "<tabel>";
-            echo "<tr>";
-            echo "<th>";
-            echo "Transcation ID";
-            echo "</th>";
-            echo "<th>";
-            echo "Date";
-            echo "</th>";
-            echo "<th>";
-            echo "Nick name";
-            echo "</th>";
-            echo "<th>";
-            echo "Description";
-            echo "</th>";
-            echo "<th>";
-            echo "Price of each";
-            echo "</th>";
-            echo "<th>";
-            echo "Qty";
-            echo "</th>";
-            echo "</tr>";
-            foreach($admin_record_whole as $admin_record_whole_item){              
-                echo "<tr>";
-                echo "<td>";       
-                echo $admin_record_whole_item[0];
-                echo "</td>";
-
-                echo "<td>";
-                echo $admin_record_whole_item[1];
-                echo "</td>";
-
-                echo "<td>";
-                echo $admin_record_whole_item[2];
-                echo "</td>";
-
-                echo "<td>";
-                echo $admin_record_whole_item[3];
-                echo "</td>";
-
-                echo "<td>";
-                echo "$".$admin_record_whole_item[4];
-                echo "</td>";
-
-                echo "<td>";
-                echo $admin_record_whole_item[5];
-                echo "</td>";
-                echo "</tr>";
+            print "<table>";
+            print "<tr><th>Transcation ID</th><th>Date</th><th>Nick name</th><th>Description</th><th>Price of each</th><th>Qty</th></tr>";
+            foreach($admin_record_whole as $admin_record_whole_item){
+                print "<tr>";
+                print "<td>".$admin_record_whole_item[0]."</td>";
+                print "<td>".$admin_record_whole_item[1]."</td>";
+                print "<td>".$admin_record_whole_item[2]."</td>";
+                print "<td>".$admin_record_whole_item[3]."</td>";
+                print "<td>$".$admin_record_whole_item[4]."</td>";
+                print "<td>".$admin_record_whole_item[5]."</td>";
+                print "</tr>";
             }
-            echo "</table>";
+            print "</table>";
         ?>
     </div>
 

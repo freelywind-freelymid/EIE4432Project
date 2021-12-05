@@ -3,11 +3,6 @@
     width: 100%;
 }
 
-a{
-    text-decoration: none;
-    color: black;
-}
-
 .admin_butt button{
     margin: 10px;
     padding-left: 25px;
@@ -21,20 +16,14 @@ a{
 }
 
 .admin_sale_recond{
-    display: grid;
-    grid-template-columns: 1fr;
-    place-items: center;
-    text-align: left;
+    text-align:center;
     width: 100%;
     color: white;
 }
 
 .admin_sale_recond table{
-    padding: 5px;
     margin: 10px;
-    width: 100%;
-    color: white;
-    border: white;
+    padding: 10px;
 }
 
 .admin_items_page{
