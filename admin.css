@@ -95,3 +95,7 @@
     background-color: gray;
     color: black;
 }
+
+#createItem-popup{
+    display: none;
+}

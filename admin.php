@@ -118,6 +118,7 @@
     <link rel="stylesheet" href="admin.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="createItem.js"></script>
 </head>
 
 <body style="text-align:center;">
@@ -137,6 +138,10 @@
                 <input type=submit id="butt_searchRecord" name="butt_searchRecord" value="Search">
             </form>
         </div>        
+    </div>
+
+    <div class="createItemPage">
+        <?php include 'createItem.php'?>
     </div>
 
     <?php
@@ -310,7 +315,7 @@
 
                 print "<div class=\"admin_item_butt\">";
                 print "<button class=\"admin_item_butt_save\">Save</button>";
-                print "<button class=\"admin_item_butt_del\">Delete</button>";
+                //print "<button class=\"admin_item_butt_del\">Delete</button>";
                 print "</div>";
 
                 print "</div>";
