@@ -276,50 +276,53 @@
     <div class="admin_items_page" id="admin_items_page">     
         <?php
             $admin_items = $_SESSION['admin_items'];
-
+                
             foreach($admin_items as $admin_item){
+                print "<form class=\"admin_item_detail\" action=\"updateItemDetail.php\" method=\"post\" enctype=\"multipart/form-data\" value=\"".$admin_item[0]."\">";
                 print "<div class=\"admin_item\">";
                 
                 print "<div class=\"admin_item_img\">";
                 print "<img src=\"".$admin_item[3]."\">";
+                print "<input name=\"admin_item_img_".$admin_item[0]."\" type=\"file\" accept=\"image/*\">";
                 print "</div>";
 
                 print "<div class=\"admin_item_desc\">";
                 print "Description:";
                 print "<br>";
-                print "<input id=\"admin_item_desc_".$admin_item[0]."\" type=\"text\" value=\"".$admin_item[1]."\">";
+                print "<input name=\"admin_item_desc_".$admin_item[0]."\" type=\"text\" value=\"".$admin_item[1]."\">";
                 print "</div>";
 
                 print "<div class=\"admin_item_price_parent\">";
                 print "Price of each:";
                 print "<br>";
-                print "$<input type=\"number\" class=\"admin_item_price\" id=\"admin_item_price_".$admin_item[0]."\" value=\"".$admin_item[2]."\" step=\"0.1\">";
+                print "$<input type=\"number\" class=\"admin_item_price\" name=\"admin_item_price_".$admin_item[0]."\" value=\"".$admin_item[2]."\" step=\"0.1\">";
                 print "</div>";
 
                 print "<div class=\"admin_item_number_parent\">";
                 print "Stock qty:";
                 print "<br>";
-                print "<input class=\"admin_item_number\" type=\"number\" value=\"".$admin_item[6]."\" min=\"1\">";
+                print "<input class=\"admin_item_number\" type=\"number\" name=\"admin_item_number_".$admin_item[0]."\" value=\"".$admin_item[6]."\" min=\"1\">";
                 print "</div>";
 
                 print "<div class=\"admin_item_active_parent\">";
                 print "Active:";
                 print "<br>";
                 if($admin_item[4] == 'T'){
-                    print "<input type=\"checkbox\" class=\"admin_item_active\" checked>";
+                    print "<input type=\"checkbox\" class=\"admin_item_active\" checked value='T' name=\"admin_item_active_".$admin_item[0]."\">";
                 }
                 else{
-                    print "<input type=\"checkbox\" class=\"admin_item_unactive\">";
+                    print "<input type=\"checkbox\" class=\"admin_item_unactive\" value='T' name=\"admin_item_active_".$admin_item[0]."\">";
                 }    
                 print "</div>";
 
                 print "<div class=\"admin_item_butt\">";
-                print "<button class=\"admin_item_butt_save\">Save</button>";
+                print "<input type=\"submit\" class=\"admin_item_butt_save\" name=\"admin_item_butt_save_".$admin_item[0]."\" value=\"Save\">";
                 //print "<button class=\"admin_item_butt_del\">Delete</button>";
                 print "</div>";
 
                 print "</div>";
-            }
+                print "</form>";
+            }          
         ?>
     </div>
 
