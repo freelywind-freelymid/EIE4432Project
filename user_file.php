@@ -1,5 +1,17 @@
 <?php
     session_start();
+
+    if(isset($_SESSION['loginState'])){
+        if($_SESSION['loginState'] == 'A'){
+            header('Location: admin.php');
+        }
+        else if($_SESSION['loginState'] == 'U'){
+            header('Location: index.php');
+        }
+    }
+    else{
+        header('Location: index.php');
+    }
 ?>
 
 <!DOCTYPE html>
@@ -49,38 +61,94 @@
                 $user_old_password = trim($_POST['user_info_page_old_password']);
                 $user_password = trim($_POST['user_info_page_password']);     
 
-                if(password_verify($user_old_password, $_SESSION['old_password'])){
-                    $user_password = password_hash($user_password);
-
-                    $user_email = $_SESSION['user_email'];
-
-                    if(file_exists($_FILES['user_info_page_userIcon']['tmp_name'])){
-                        $path_header = 'res/image/user/icon/';
-                
-                        // limit the file size
-                        if ($_FILES['user_info_page_userIcon']['size'] <= 500000) {
-                            $file = $_FILES['user_info_page_userIcon']['tmp_name'];
-                            //rename the file
-                            $newfilename = $user_email . '.' . strtolower(end(explode('.',$_FILES['user_info_page_userIcon']['name'])));
-                                                        
-                            $dest = $path_header . $newfilename;
-                
-                            //is file exists?
-                            if(file_exists($dest) > 0){
-                                //delete the file            
-                                unlink($dest);
+                if($user_password != ""){
+                    if(password_verify($user_old_password, $_SESSION['old_password'])){
+                        $user_password = password_hash($user_password);
+    
+                        $user_email = $_SESSION['user_email'];
+    
+                        if(file_exists($_FILES['user_info_page_userIcon']['tmp_name'])){
+                            $path_header = 'res/image/user/icon/';
+                    
+                            // limit the file size
+                            if ($_FILES['user_info_page_userIcon']['size'] <= 500000) {
+                                $file = $_FILES['user_info_page_userIcon']['tmp_name'];
+                                //rename the file
+                                $newfilename = $user_email . '.' . strtolower(end(explode('.',$_FILES['user_info_page_userIcon']['name'])));
+                                                            
+                                $dest = $path_header . $newfilename;
+                    
+                                //is file exists?
+                                if(file_exists($dest) > 0){
+                                    //delete the file            
+                                    unlink($dest);
+                                }
+                                move_uploaded_file($file, $dest);
+                                
+                                //test the connection
+                                if(!$connect){
+                                    die("Connection failed:" .mysqli_connect_error());
+                                }
+                                else{
+                                    $stmt = $connect->prepare("UPDATE customer 
+                                                                SET nickName = ?, email = ?, icon_path = ?, gender = ?, birthday = ?, password = ?
+                                                                WHERE custID = ?");
+                                    $stmt->bind_param("sssssss", $user_nickName, $user_email, $dest, $user_gender, $user_birthday, $user_password, $loginId);
+                                    $stmt->execute(); 
+                                }
                             }
-                            move_uploaded_file($file, $dest);
-                            
+                            else{
+                                $flag = false;
+                            }
+                        }
+                        else{
                             //test the connection
                             if(!$connect){
                                 die("Connection failed:" .mysqli_connect_error());
                             }
                             else{
                                 $stmt = $connect->prepare("UPDATE customer 
-                                                            SET nickName = ?, email = ?, icon_path = ?, gender = ?, birthday = ?, password = ?
+                                                            SET nickName = ?, email = ?, gender = ?, birthday = ?, password = ?
                                                             WHERE custID = ?");
-                                $stmt->bind_param("sssssss", $user_nickName, $user_email, $dest, $user_gender, $user_birthday, $user_password, $loginId);
+                                $stmt->bind_param("ssssss", $user_nickName, $user_email, $user_gender, $user_birthday, $user_password, $loginId);
+                                $stmt->execute(); 
+                            }
+                        }
+                    }
+                    else{
+                        $flag = false;
+                    }
+                }
+                else{
+                    $user_email = $_SESSION['user_email'];
+    
+                    if(file_exists($_FILES['user_info_page_userIcon']['tmp_name'])){
+                        $path_header = 'res/image/user/icon/';
+                    
+                        // limit the file size
+                        if ($_FILES['user_info_page_userIcon']['size'] <= 500000) {
+                            $file = $_FILES['user_info_page_userIcon']['tmp_name'];
+                            //rename the file
+                            $newfilename = $user_email . '.' . strtolower(end(explode('.',$_FILES['user_info_page_userIcon']['name'])));
+                                                            
+                            $dest = $path_header . $newfilename;
+                    
+                            //is file exists?
+                            if(file_exists($dest) > 0){
+                                //delete the file            
+                                unlink($dest);
+                            }
+                            move_uploaded_file($file, $dest);
+                                
+                            //test the connection
+                            if(!$connect){
+                                die("Connection failed:" .mysqli_connect_error());
+                            }
+                            else{
+                                $stmt = $connect->prepare("UPDATE customer 
+                                                            SET nickName = ?, email = ?, icon_path = ?, gender = ?, birthday = ?
+                                                            WHERE custID = ?");
+                                $stmt->bind_param("ssssss", $user_nickName, $user_email, $dest, $user_gender, $user_birthday, $loginId);
                                 $stmt->execute(); 
                             }
                         }
@@ -95,15 +163,12 @@
                         }
                         else{
                             $stmt = $connect->prepare("UPDATE customer 
-                                                        SET nickName = ?, email = ?, gender = ?, birthday = ?, password = ?
+                                                        SET nickName = ?, email = ?, gender = ?, birthday = ?
                                                         WHERE custID = ?");
-                            $stmt->bind_param("ssssss", $user_nickName, $user_email, $user_gender, $user_birthday, $user_password, $loginId);
+                            $stmt->bind_param("sssss", $user_nickName, $user_email, $user_gender, $user_birthday, $loginId);
                             $stmt->execute(); 
                         }
                     }
-                }
-                else{
-                    $flag = false;
                 }
             }
 
