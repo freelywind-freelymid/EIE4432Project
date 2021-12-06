@@ -10,4 +10,8 @@ $(document).ready(function () {
     $(".return-admin-home").click(function () {
         location.replace("admin.php");
     });
+
+    $("#user_icon").click(function () {
+        location.replace("user_file.php");
+    });
 });
