@@ -19,29 +19,7 @@
     if(empty($_POST['admin_item_active_'.$itemID])){
         $active = 'F';
     }
-                           
-    if(file_exists($_FILES['admin_item_img_'.$itemID]['tmp_name'])){
-        $path_header = 'res/image/item/';
-        $final_path = null;
-
-        // limit the file size
-        if ($_FILES['admin_item_img_'.$itemID]['size'] <= 500000) {
-            $file = $_FILES['admin_item_img_'.$itemID]['tmp_name'];
-            //rename the file
-            $newfilename = $itemID . '.' . strtolower(end(explode('.',$_FILES['admin_item_img_'.$itemID]['name'])));
-                                        
-            $dest = $path_header . $newfilename;
-            $final_path = $dest;
-
-            //is file exists?
-            if(file_exists($dest) > 0){
-                //delete the file            
-                unlink($dest);
-            }
-            move_uploaded_file($file, $dest);              
-        }
-    }                                  
-    
+               
     //db setting
     $server = "localhost";
     $user = "eie4432project";
@@ -51,15 +29,46 @@
     //open a connection with MySQL
     $connect = mysqli_connect($server,$user,$pw,$db);
 
-    //test the connection
-    if(!$connect){
-        die("Connection failed:" .mysqli_connect_error());
+    if(file_exists($_FILES['admin_item_img_'.$itemID]['tmp_name'])){
+        $path_header = 'res/image/item/';
+
+        // limit the file size
+        if ($_FILES['admin_item_img_'.$itemID]['size'] <= 500000) {
+            $file = $_FILES['admin_item_img_'.$itemID]['tmp_name'];
+            //rename the file
+            $newfilename = $itemID . '.' . strtolower(end(explode('.',$_FILES['admin_item_img_'.$itemID]['name'])));
+                                        
+            $dest = $path_header . $newfilename;
+
+            //is file exists?
+            if(file_exists($dest) > 0){
+                //delete the file            
+                unlink($dest);
+            }
+            move_uploaded_file($file, $dest);              
+
+            //test the connection
+            if(!$connect){
+                die("Connection failed:" .mysqli_connect_error());
+            }
+            else{
+                $stmt = $connect->prepare("UPDATE item SET description = ?, price = ?, img_path = ?, active = ?, qty = ? WHERE itemID = ?");
+                $stmt->bind_param("ssssss", $description, $price, $dest, $active, $qty, $itemID);
+                $stmt->execute();   
+            }
+        }
     }
     else{
-        $stmt = $connect->prepare("UPDATE item SET description = ?, price = ?, active = ?, qty = ? WHERE itemID = ?");
-        $stmt->bind_param("sssss", $description, $price, $active, $qty, $itemID);
-        $stmt->execute();   
-    }
+        //test the connection
+        if(!$connect){
+            die("Connection failed:" .mysqli_connect_error());
+        }
+        else{
+            $stmt = $connect->prepare("UPDATE item SET description = ?, price = ?, active = ?, qty = ? WHERE itemID = ?");
+            $stmt->bind_param("sssss", $description, $price, $active, $qty, $itemID);
+            $stmt->execute();   
+        }
+    }                              
 
     //close the connection
     mysqli_close($connect);

@@ -120,7 +120,7 @@
                         <label>Birthday: </label><span id="birthday-info" class="info"></span>
                     </div>
                     <div>
-                        <input type="date" id="registerPage_birthday" name="registerPage_birthday" class="inputBox"></textarea>
+                        <input type="date" id="registerPage_birthday" name="registerPage_birthday" class="inputBox">
                     </div>
                 </div>
                 <div class="rowData">
@@ -128,7 +128,7 @@
                         <label>Gender: </label><span id="gender-info" name="gender-info" class="info"></span>
                     </div>
                     <div>
-                        <select id="registerPage_gender" name="registerPage_gender" name="gender" class="inputSelect">
+                        <select id="registerPage_gender" name="registerPage_gender" class="inputSelect">
                             <option class="inputOption" value=""></option>
                             <option class="inputOption" value="M">Male</option>
                             <option class="inputOption" value="F">Female</option>
