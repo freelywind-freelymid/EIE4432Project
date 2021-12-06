@@ -28,4 +28,8 @@ $(document).ready(function () {
     $("#loginPage_back").click(function () {
         $("#login-popup").hide();
     });
+
+    $("#forgot-info").click(function () {
+        location.replace("reset_password.php");
+    });
 });

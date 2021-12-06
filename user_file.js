@@ -46,7 +46,7 @@ $(document).ready(function () {
         if(password != "" || confirmPassword != ""){
             if(old_password == ""){
                 $("#user-info-page-old-password-info").html("Required.");
-                $("#user-info-page-old-password-info").addClass("input-error");
+                $("#user-info-page-old-password").addClass("input-error");
             }
     
             if (password == "") {

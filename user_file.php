@@ -63,7 +63,7 @@
 
                 if($user_password != ""){
                     if(password_verify($user_old_password, $_SESSION['old_password'])){
-                        $user_password = password_hash($user_password);
+                        $user_password = password_hash($user_password, PASSWORD_DEFAULT);
     
                         $user_email = $_SESSION['user_email'];
     
