@@ -333,10 +333,6 @@
         <?php
             $admin_record_whole = $_SESSION['admin_record_whole'];
 
-            usort($admin_record_whole, function($a, $b) {
-                return $b[1] <=> $a[1];
-            });
-
             print "<table>";
             print "<tr><th>Transcation ID</th><th>Date</th><th>Nick name</th><th>Description</th><th>Price of each</th><th>Qty</th></tr>";
             foreach($admin_record_whole as $admin_record_whole_item){
