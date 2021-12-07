@@ -41,7 +41,7 @@
                         $result = $stmt->get_result();
 
                         if(!$result){
-                            die("Could not successfully run query." .mysqli_error($connect));
+                            die("Could not succeedsfully run query." .mysqli_error($connect));
                             $flag = false;
                         }
                         else{
@@ -83,7 +83,7 @@
                 }
                 
                 if($flag){
-                    echo '<script>alert("Register succes!")</script>';                  
+                    echo '<script>alert("Register succeed!")</script>';                  
                 }
                 else{
                     echo '<script>alert("Register fail!")</script>';

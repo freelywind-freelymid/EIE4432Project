@@ -1,5 +1,13 @@
 <?php
     session_start();
+
+    if(isset($_SESSION['saled'])){
+        if($_SESSION['saled'] == 'T'){
+            echo '<script>alert("Transaction succeed!")</script>';
+        }
+
+        $_SESSION['saled'] = 'F';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +89,7 @@
 
             <div class="cart_page_bottom">
                 <button id="cart_reset">Clear the cart</button>
-                <input id="cart_bill" type="submit" value="Bill"/>
+                <input id="cart_bill" name="cart_bill" type="submit" value="Bill"/>
             </div>
 
         </form>

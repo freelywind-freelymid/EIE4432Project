@@ -194,39 +194,6 @@
         <?php include 'createItem.php'?>
     </div>
 
-    <div class="popularchart">
-        <a name="popolar"></a>
-        <h1 style="color:white; text-align:left;">Top 3 popular clothes</h1>
-        <div class="popularDetail">
-            <?php
-                $counter = 1;
-                foreach($clothesData as $clotheDetail){
-                    echo "<div>";
-                    echo "<div>";
-                    echo "<b style=\"font-family: Viner Hand ITC; color:red;\">No: ".$counter."</b>";
-                    echo "</div>";
-                    echo "<div>";
-                    echo "<img src=\"".$clotheDetail[2]."\" height=\"100px\">";
-                    echo "</div>";
-                    echo "<div>";
-                    echo "<p>";
-                    echo $clotheDetail[1];
-                    echo "<br>";
-                    echo "<b>Sales ".$clotheDetail[3]." item(s)</b>";
-                    echo "</p>";           
-                    echo "</div>";
-                    echo "</div>";
-
-                    $counter++;
-                }
-            ?>
-        </div>
-        <div id="chartContainer_parent">
-            <diV id="chartContainer" style="height: 370px; width: 80%;"></div>
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        </div>      
-    </div>
-
     <?php
         if(isset($_POST['butt_searchRecord'])){
             $search_custID = $_POST['search_custID'];
@@ -326,6 +293,39 @@
             mysqli_close($connect);
         }
     ?>
+
+    <div class="popularchart">
+        <a name="popolar"></a>
+        <h1 style="color:white; text-align:left;">Top 3 popular clothes</h1>
+        <div class="popularDetail">
+            <?php
+                $counter = 1;
+                foreach($clothesData as $clotheDetail){
+                    echo "<div>";
+                    echo "<div>";
+                    echo "<b style=\"font-family: Viner Hand ITC; color:red;\">No: ".$counter."</b>";
+                    echo "</div>";
+                    echo "<div>";
+                    echo "<img src=\"".$clotheDetail[2]."\" height=\"100px\">";
+                    echo "</div>";
+                    echo "<div>";
+                    echo "<p>";
+                    echo $clotheDetail[1];
+                    echo "<br>";
+                    echo "<b>Sales ".$clotheDetail[3]." item(s)</b>";
+                    echo "</p>";           
+                    echo "</div>";
+                    echo "</div>";
+
+                    $counter++;
+                }
+            ?>
+        </div>
+        <div id="chartContainer_parent">
+            <diV id="chartContainer" style="height: 370px; width: 80%;"></div>
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>      
+    </div>
 
     <a name="allRecord"></a>
     <h1 style="color:white; text-align:left;">All purchase records</h1>
