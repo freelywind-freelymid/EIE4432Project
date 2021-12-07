@@ -65,8 +65,6 @@
                     if(password_verify($user_old_password, $_SESSION['old_password'])){
                         $user_password = password_hash($user_password, PASSWORD_DEFAULT);
     
-                        $user_email = $_SESSION['user_email'];
-    
                         if(file_exists($_FILES['user_info_page_userIcon']['tmp_name'])){
                             $path_header = 'res/image/user/icon/';
                     
@@ -120,8 +118,6 @@
                     }
                 }
                 else{
-                    $user_email = $_SESSION['user_email'];
-    
                     if(file_exists($_FILES['user_info_page_userIcon']['tmp_name'])){
                         $path_header = 'res/image/user/icon/';
                     
@@ -196,7 +192,6 @@
                         $user_birthday = $row['birthday'];
                         $user_password = $row['password'];
 
-                        $_SESSION['user_email'] = $user_email;
                         $_SESSION['old_password'] = $user_password;
                     }
                 }       

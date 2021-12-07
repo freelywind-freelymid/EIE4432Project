@@ -50,32 +50,32 @@
                         }
                         else{
                             while($row = mysqli_fetch_assoc($result)) {
-                                if(mysqli_num_rows($result) == 0){
-                                    $path_header = 'res/image/item/';
-                                    $final_path = null;
-                                    $itemID = $row['id'];
-                                            
-                                    // limit the file size
-                                    if ($_FILES['createItem_itemImg']['size'] <= 500000) {
-                                        $file = $_FILES['createItem_itemImg']['tmp_name'];
+                                if(mysqli_num_rows($result) == 1){
+                                    if(file_exists($_FILES['createItem_itemImg']['tmp_name'])){
+                                        $path_header = 'res/image/item/';
+                                        $itemID = $row['id'];
 
-                                        //rename the file
-                                        $newfilename = $itemID . '.' . strtolower(end(explode('.',$_FILES['createItem_itemImg']['name'])));
-                                                
-                                        $dest = $path_header . $newfilename;
-                                        $final_path = $dest;
+                                        // limit the file size
+                                        if ($_FILES['createItem_itemImg']['size'] <= 500000) {
+                                            $file = $_FILES['createItem_itemImg']['tmp_name'];
 
-                                        //is file exists?
-                                        if(file_exists($dest) > 0){
-                                            //delete the file            
-                                            unlink($dest);
+                                            //rename the file
+                                            $newfilename = $itemID . '.' . strtolower(end(explode('.',$_FILES['createItem_itemImg']['name'])));
+                                                    
+                                            $dest = $path_header . $newfilename;
+
+                                            //is file exists?
+                                            if(file_exists($dest) > 0){
+                                                //delete the file            
+                                                unlink($dest);
+                                            }
+                                            move_uploaded_file($file, $dest);              
+
+                                            $stmt = $connect->prepare("UPDATE item SET img_path = ? WHERE itemID = ?");
+                                            $stmt->bind_param("ss", $dest, $itemID);
+                                            $stmt->execute();
                                         }
-                                        move_uploaded_file($file, $dest);              
-
-                                        $stmt = $connect->prepare("UPDATE item SET img_path = ? WHERE itemID = ?");
-                                        $stmt->bind_param("ss", $dest, $itemID);
-                                        $stmt->execute();
-                                    }
+                                    }                          
                                 }              
                             }
                         }             
