@@ -17,8 +17,6 @@
 <link rel="stylesheet" href="global.css">
 <link rel="stylesheet" href="cart.css">
 
-<script src="cart.js"></script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
@@ -68,13 +66,7 @@
             ?>
 
             <div class="cart_payment_info">
-                <?php
-                    if(!isset($_SESSION['cart'])){
-                        $cart = array();          
-                    }else{
-                        $cart = $_SESSION['cart'];
-                    }
-    
+                <?php    
                     $total_qty = 0;
                     $amount = 0.0;
                     foreach($cart as $cart_item){
@@ -88,7 +80,7 @@
             </div>
 
             <div class="cart_page_bottom">
-                <button id="cart_reset">Clear the cart</button>
+                <button id="cart_reset" name="cart_reset">Clear the cart</button>
                 <input id="cart_bill" name="cart_bill" type="submit" value="Bill"/>
             </div>
 

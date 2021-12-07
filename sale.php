@@ -13,6 +13,10 @@
         header('Location: index.php');
     }
 
+    if(isset($_POST['cart_reset'])){
+        unset($_SESSION['cart']);
+    }
+
     if(isset($_POST['cart_bill'])){
         //db setting
         $server = "localhost";
