@@ -23,6 +23,9 @@
     //open a connection with MySQL
     $connect = mysqli_connect($server,$user,$pw,$db);
 
+    $chartData = array();
+    $clothesData = array();
+
     //test the connection
     if(!$connect){
         die("Connection failed:" .mysqli_connect_error());
@@ -103,6 +106,33 @@
                 $_SESSION['admin_record_whole'] = $admin_record_whole;
             }
         }
+
+        $stmt = $connect->prepare("SELECT item.itemID, item.description, item.img_path, COUNT(trans_detail.qty) as qty  
+                                    FROM item, trans_detail
+                                    WHERE item.itemID = trans_detail.itemID
+                                    GROUP BY trans_detail.itemID
+                                    ORDER BY COUNT(trans_detail.qty) DESC
+                                    LIMIT 3");
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if(!$result){
+            die("Could not successfully run query." .mysqli_error($connect));
+        }
+        else{
+            while($row = mysqli_fetch_assoc($result)){
+                $chart_item_Data = array("label"=>$row['description'], "y"=>$row['qty']);
+                
+                $clotheData = array();
+                array_push($clotheData, $row['itemID']);
+                array_push($clotheData, $row['description']);
+                array_push($clotheData, $row['img_path']);
+                array_push($clotheData, $row['qty']);
+                array_push($clothesData, $clotheData);
+
+                array_push($chartData, $chart_item_Data);
+            }
+        }
     }
 
     //close the connection
@@ -119,6 +149,25 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="createItem.js"></script>
+    <script>
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "dark1", // "light1", "light2", "dark1", "dark2"
+                title: {
+                    text: "Top 3 popular clothes"
+                },
+                axisY: {
+                    title: "Sales amount"
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: <?php echo json_encode($chartData, JSON_NUMERIC_CHECK); ?>
+                }]
+            });
+            chart.render();        
+        }
+    </script>
 </head>
 
 <body style="text-align:center;">
@@ -131,6 +180,7 @@
         <button id="butt_create">Create a new item</button>
         <button id="butt_viewupdate" onClick="location.href='#viewupdate'">View/Update the stock</button>
         <button id="butt_allRecord" onClick="location.href='#allRecord'">View purchase records</button>
+        <button id="butt_popular" onClick="location.href='#popolar'">View the popular clothes</button>
         <div>
             <form action="admin.php" method="post">
                 <span style="color:white; font-size:18px;">Seaching purchase records which customer ID is </span>
@@ -142,6 +192,39 @@
 
     <div class="createItemPage">
         <?php include 'createItem.php'?>
+    </div>
+
+    <div class="popularchart">
+        <a name="popolar"></a>
+        <h1 style="color:white; text-align:left;">Top 3 popular clothes</h1>
+        <div class="popularDetail">
+            <?php
+                $counter = 1;
+                foreach($clothesData as $clotheDetail){
+                    echo "<div>";
+                    echo "<div>";
+                    echo "<b style=\"font-family: Viner Hand ITC; color:red;\">No: ".$counter."</b>";
+                    echo "</div>";
+                    echo "<div>";
+                    echo "<img src=\"".$clotheDetail[2]."\" height=\"100px\">";
+                    echo "</div>";
+                    echo "<div>";
+                    echo "<p>";
+                    echo $clotheDetail[1];
+                    echo "<br>";
+                    echo "<b>Sales ".$clotheDetail[3]." item(s)</b>";
+                    echo "</p>";           
+                    echo "</div>";
+                    echo "</div>";
+
+                    $counter++;
+                }
+            ?>
+        </div>
+        <div id="chartContainer_parent">
+            <diV id="chartContainer" style="height: 370px; width: 80%;"></div>
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>      
     </div>
 
     <?php

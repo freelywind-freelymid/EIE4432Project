@@ -73,7 +73,7 @@
             echo "</div>";
             echo "</div>";
             echo "<div>";
-            echo "<input type=\"submit\" id=\"reset-info-update\" name=\"reset-info-update\" value=\"Save\" />";             
+            echo "<input type=\"submit\" id=\"reset-info-update\" name=\"reset-info-update\" value=\"Reset\" />";             
             echo "</div>";
             echo "</form>";
             echo "</div>";
